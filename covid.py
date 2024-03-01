@@ -229,6 +229,56 @@ def user_profile(id, password):
                         f.writelines(file_lines)
                     print("Update successfully")
                     user_profile(id,password)
+            elif(option==3):
+                print("Book appointment")
+                if(user_info[15]=='-'):
+                    print("Please first update your medical history and occupation! Thanks")
+                    print("Press enter to continue")
+                    input()
+                    user_profile(id,password)
+                else:
+                    yesorno = input("Do you want to request an appointment for vaccination? (enter yes or no): ")
+                    yesorno = yesorno.lower()
+                    if yesorno == "yes":
+                        user_ID=user_info[1]
+                        with open("userAccount.txt", 'r') as f:    
+                            file_lines = f.readlines()
+                        found = False
+                        for i, line in enumerate(file_lines):
+                            if user_ID in line:
+                                file_lines[i+15]="want"+"\n"
+                                found = True
+                                break
+                        if not found:
+                            print(user_ID + " not found in file.")
+                        with open("userAccount.txt", 'w') as f:
+                            f.writelines(file_lines)
+                        print("Appointment booked successfully! Please wait within three days and check the appointment time.")
+                        print("Press enter to continue")
+                        input()
+                        user_profile(id,password)
+
+                    else:
+                        user_profile(id,password)
+            
+            elif(option==4):
+                print("Check your appointment\n")
+                if(user_info[17]=='-'):
+                    print("Please book appointment first!!!, and wait for admin to assign\n")
+                    print("Press enter to continue")
+                    input()
+                    user_profile(id,password)
+                else:
+                    print(f"Vaccination id: {user_info[17]}")
+                    print(f"Vaccination location: {user_info[18]}")
+                    print(f"Vaccination time: {user_info[19]}")
+                    print(f"Vaccine type: {user_info[20]}\n")
+            
+            elif(option==5):
+                main_menu()
+
+
+
 
 def admin_profile(id, password):
     print("hi admin")
@@ -245,7 +295,7 @@ def admin_profile(id, password):
             print("1. Customize account details")
             print("2. Create appointment time slot:")
             print("3. Assigns time slot")
-            print("3. Quit")
+            print("4. Quit")
             option=input_integer("Please enter your choice:")
             if(option==1):
                 old_value=input(str("Enter the old value(eg: Danny):")) # Let the user enter the value that he/she wishs to modify
@@ -275,37 +325,86 @@ def admin_profile(id, password):
                 
                 # To create the time slot for vaccination
                 print("Create appointment")
+                while True:
+                    ppv_id = input("Please enter the ppv id: ")
 
+                    # To identify the ppv id is exists or not from the txt file
+                    with open("ppv.txt", 'r+') as file:
+                        lines = file.readlines()
+                        found = False
+                        for line in lines:
+                            if ppv_id in line:
+                                print("ppv id already exists. Please enter a new one.")
+                                found = True
+                                break
 
-            while True:
-                ppv_id = input("Please enter the ppv id: ")
+                        # If the ppv id is not exists
+                        if not found:
+                            ppv_venue=input("Please enter the venue for vaccination:")
+                            ppv_time=input("Please enter the time for vaccination:")
+                            ppv_type=input("Please enter the type of vaccine:")
 
-                # To identify the ppv id is exists or not from the txt file
-                with open("ppv.txt", 'r+') as file:
-                    lines = file.readlines()
-                    found = False
-                    for line in lines:
-                        if ppv_id in line:
-                            print("ppv id already exists. Please enter a new one.")
-                            found = True
+                            file.write(ppv_id+"\n")
+                            file.write(ppv_venue+"\n")
+                            file.write(ppv_time+"\n")
+                            file.write(ppv_type+"\n")
+                            file.write("\n")
                             break
 
-                    # If the ppv id is not exists
-                    if not found:
-                        ppv_venue=input("Please enter the venue for vaccination:")
-                        ppv_time=input("Please enter the time for vaccination:")
-                        ppv_type=input("Please enter the type of vaccine:")
+                    print("Vaccination added successfully!!!")
+                    admin_profile(id,password)
 
-                        file.write(ppv_id+"\n")
-                        file.write(ppv_venue+"\n")
-                        file.write(ppv_time+"\n")
-                        file.write(ppv_type+"\n")
-                        file.write("\n")
+            elif(option==3):
+                print("Assign vaccination time slot\n\nUser list")
+                
+                # Shows the user that have booked their appointment
+                for i in range(len(user_list)):
+                    if(user_list[i][16]=="want"):
+                        for j in range(len(user_info)):
+                            
+                            print(f"Name: {user_list[i][j]}, User Id: {user_list[i][j+1]}, Age: {user_list[i][j+2]}, Postcode: {user_list[i][j+3]}, Phone number: {user_list[i][j+4]}, Address: {user_list[i][j+5]}, Category: {user_list[i][j+6]}, Risk Level: {user_list[i][j+15]}|")
+                            break
+                
+                # Shows the ppv list
+                print("\n PPV list")
+                for ppv_info in ppv_list:
+                    for i in range(len(ppv_info)):
+                        print(f"PPV id: {ppv_info[0]}, PPV location: {ppv_info[1]}, Vacinnation time: {ppv_info[2]}, Vaccine type: {ppv_info[3]}")
                         break
+                idd=input("\nPlease enter the user id that you wish to assign the time slot to him/her:")
 
-            print("Vaccination added successfully!!!")
-            admin_profile(id,password)
-            
+                with open("userAccount.txt", 'r') as f:
+                        file_lines = f.readlines()
+               
+                found = False
+                for i, line in enumerate(file_lines):
+                    if idd in line:
+                        print(f"ID Found at line {i}")
+                        found = True
+                        ppv=input("Please enter the ppv id:")
+                        for ppv_info in ppv_list:  # Corrected variable name here
+                            for j in range(len(ppv_info)):
+                                if ppv == ppv_info[j]:
+                                    
+                                    print("Press enter to continue")
+                                    input()
+                                    file_lines[i+16]=ppv_info[j]+"\n"
+                                    file_lines[i+17]=ppv_info[j+1]+"\n"
+                                    file_lines[i+18]=ppv_info[j+2]+"\n"
+                                    file_lines[i+19]=ppv_info[j+3]+"\n"
+                        break
+                        
+                with open("userAccount.txt", 'w') as f:
+                    f.writelines(file_lines)
+                
+                admin_profile(id,password)
+
+            elif(option==4):
+                main_menu() 
+
+
+                
+                
 
 
         
