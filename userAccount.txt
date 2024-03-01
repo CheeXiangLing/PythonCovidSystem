@@ -1,9 +1,9 @@
 Danny
 100
-23
+34
 32111
-012-120292922
-32,Taman Rasa Say
+012-23929232232
+12,Taman Rasa 
 Adult
 321
 -
@@ -25,20 +25,20 @@ Adult
 
 Jack
 200
-23
+90
 32000
-012-12929292
-12,Taman Sayang Awak
-Adult
-321
+012-2239292233
+11,Taman
+Senior
+123
+no
+no
 no
 no
 yes
-no
 yes
-no
-2
-1: Low risk
+1
+3: High risk
 -
 -
 -
@@ -50,12 +50,37 @@ no
 
 Albert
 admin0
-23
-32111
-01232212223
-23, Klcc
+32
+32999
+012-29392923
+44,Taman
 admin
 000
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+-
+
+Snake
+admin1
+23
+32444
+012-32939293
+44,Tamn
+admin
+999
 -
 -
 -
