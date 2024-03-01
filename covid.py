@@ -388,6 +388,7 @@ def admin_profile(id, password):
                                     
                                     print("Press enter to continue")
                                     input()
+                                    file_lines[i+15]="Assigned\n" # The status which is want will change to Assigned which means it will not appeared in this function
                                     file_lines[i+16]=ppv_info[j]+"\n"
                                     file_lines[i+17]=ppv_info[j+1]+"\n"
                                     file_lines[i+18]=ppv_info[j+2]+"\n"
