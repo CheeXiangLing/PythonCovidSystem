@@ -6,19 +6,19 @@ Danny
 12,Taman Rasa 
 Adult
 321
--
--
--
--
--
--
--
--
--
--
--
--
--
+no
+no
+no
+yes
+no
+yes
+3
+3: High risk
+want
+ppv_101
+Sitiawan Perak
+4pm
+Sinovac
 -
 -
 -
@@ -34,8 +34,8 @@ Senior
 no
 no
 no
-no
 yes
+no
 yes
 1
 3: High risk
